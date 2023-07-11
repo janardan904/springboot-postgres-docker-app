@@ -1,0 +1,28 @@
+version: "3"
+services:
+  application:
+    image: spring-boot-postgresql-app
+    ports:
+      - "8080:8080"
+    networks:
+      - springboot-db-net
+    depends_on:
+      - postgresdb
+    volumes:
+      - /data/springboot-app
+    
+  postgresdb:
+     image: postgres:14.1-alpine
+     networks:
+       - springboot-db-net
+     environment:
+       - POSTGRES_USER=postgres
+       - POSTGRES_PASSWORD=postgres
+       - POSTGRES_DATABASE=sbms
+     port:
+       - 5432:5432
+     volumes:
+       - db:/var/lib/postgresql/data
+ networks:
+  springboot-db-net:
+ 
